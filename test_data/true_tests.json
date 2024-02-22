@@ -1,0 +1,242 @@
+[    
+    {
+        "formula": "0",
+	    "vars":    [],
+	    "result":  0
+    },
+    {
+        "formula": "123.4",
+	    "vars":    [],
+	    "result":  123.4
+    },
+    {
+        "formula": "-123.4",
+	    "vars":    [],
+	    "result":  -123.4
+    },
+    {
+        "formula": "+ 123.4 56.78",
+	    "vars":    [],
+	    "result":  180.18
+    },
+    {
+        "formula": "+ 56.78 123.4",
+	    "vars":    [],
+	    "result":  180.18
+    },   
+    {
+        "formula": "+ 123.4 -56.78",
+	    "vars":    [],
+	    "result":  66.62
+    },
+    {
+        "formula": "+ -123.4 56.78",
+	    "vars":    [],
+	    "result":  -66.62
+    },
+    {
+        "formula": "- 123.4 56.78",
+	    "vars":    [],
+	    "result":  66.62
+    },
+    {
+        "formula": "- 56.78 123.4",
+	    "vars":    [],
+	    "result":  -66.62
+    },   
+    {
+        "formula": "- 123.4 -56.78",
+	    "vars":    [],
+	    "result":  180.18
+    },
+    {
+        "formula": "- -123.4 56.78",
+	    "vars":    [],
+	    "result":  -180.18
+    },
+    {
+        "formula": "* 123.4 56.78",
+	    "vars":    [],
+	    "result":  7006.652
+    },
+    {
+        "formula": "* 56.78 123.4",
+	    "vars":    [],
+	    "result":  7006.652
+    },   
+    {
+        "formula": "* 123.4 -56.78",
+	    "vars":    [],
+	    "result":  -7006.652
+    },
+    {
+        "formula": "* -123.4 56.78",
+	    "vars":    [],
+	    "result":  -7006.652
+    },
+    {
+        "formula": "/ 123.4 56.78",
+	    "vars":    [],
+	    "result":  2.173300457907714
+    },
+    {
+        "formula": "/ 56.78 123.4",
+	    "vars":    [],
+	    "result":  0.460129659643436
+    },   
+    {
+        "formula": "/ 123.4 -56.78",
+	    "vars":    [],
+	    "result":  -2.173300457907714
+    },
+    {
+        "formula": "/ -123.4 56.78",
+	    "vars":    [],
+	    "result":  -2.173300457907714
+    },
+    {
+        "formula": "x0",
+	    "vars":    [0.0],
+	    "result":  0
+    },
+    {
+        "formula": "x0",
+	    "vars":    [123.4],
+	    "result":  123.4
+    },
+    {
+        "formula": "x0",
+	    "vars":    [-123.4],
+	    "result":  -123.4
+    },     
+    {
+        "formula": "+ x0 x1",
+	    "vars":    [123.4, 56.78],
+	    "result":  180.18
+    },
+    {
+        "formula": "+ x0 x1",
+	    "vars":    [56.78, 123.4],
+	    "result":  180.18
+    },   
+    {
+        "formula": "+ x0 x1",
+	    "vars":    [123.4, -56.78],
+	    "result":  66.62
+    },
+    {
+        "formula": "+ x0 x1",
+	    "vars":    [-123.4, 56.78],
+	    "result":  -66.62
+    },     
+    {
+        "formula": "- x0 x1",
+	    "vars":    [123.4, 56.78],
+	    "result":  66.62
+    },
+    {
+        "formula": "- x0 x1",
+	    "vars":    [56.78, 123.4],
+	    "result":  -66.62
+    },   
+    {
+        "formula": "- x0 x1",
+	    "vars":    [123.4, -56.78],
+	    "result":  180.18
+    },
+    {
+        "formula": "- x0 x1",
+	    "vars":    [-123.4, 56.78],
+	    "result":  -180.18
+    },     
+    {
+        "formula": "* x0 x1",
+	    "vars":    [123.4, 56.78],
+	    "result":  7006.652
+    },
+    {
+        "formula": "* x0 x1",
+	    "vars":    [56.78, 123.4],
+	    "result":  7006.652
+    },   
+    {
+        "formula": "* x0 x1",
+	    "vars":    [123.4, -56.78],
+	    "result":  -7006.652
+    },
+    {
+        "formula": "* x0 x1",
+	    "vars":    [-123.4, 56.78],
+	    "result":  -7006.652
+    },     
+    {
+        "formula": "/ x0 x1",
+	    "vars":    [123.4, 56.78],
+	    "result":  2.173300457907714
+    },
+    {
+        "formula": "/ x0 x1",
+	    "vars":    [56.78, 123.4],
+	    "result":  0.460129659643436
+    },   
+    {
+        "formula": "/ x0 x1",
+	    "vars":    [123.4, -56.78],
+	    "result":  -2.173300457907714
+    },
+    {
+        "formula": "/ x0 x1",
+	    "vars":    [-123.4, 56.78],
+	    "result":  -2.173300457907714
+    },
+    {
+        "formula": "+ x0 x0",
+	    "vars":    [123.4],
+	    "result":  246.8
+    },   
+    {
+        "formula": "- x0 x0",
+	    "vars":    [123.4],
+	    "result":  0
+    },   
+    {
+        "formula": "* x0 x0",
+	    "vars":    [123.4],
+	    "result":  15227.560000000001
+    },   
+    {
+        "formula": "* x0 x0",
+	    "vars":    [-123.4],
+	    "result":  15227.560000000001
+    },
+    {
+        "formula": "/ x0 x0",
+	    "vars":    [123.4],
+	    "result":  1
+    },    
+    {
+        "formula": "- x0 x1",
+	    "vars":    [50, 25],
+	    "result":  25
+    },    
+    {
+        "formula": "- x1 x0",
+	    "vars":    [50, 25],
+	    "result":  -25
+    },    
+    {
+        "formula": "/ + x0 x1 * - x0 x1 0.1",
+	    "vars":    [10, 5],
+	    "result":  30
+    },    
+    {
+        "formula": "/ + x0 x1 - x1 x0",
+	    "vars":    [10, 5],
+	    "result":  -3
+    },    
+    {
+        "formula": "/ * x0 x1 - x0 x1",
+	    "vars":    [10, 5],
+	    "result":  10
+    }
+]
