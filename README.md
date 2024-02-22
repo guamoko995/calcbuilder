@@ -1,13 +1,13 @@
 # Calc builder
 BuildСalcFunc builds the СalcFunc function. CalcFunc effectively calculates the value of the expression passed to BuildСalcFunc during construction. Expression can contain variables. CalcFunc obtains the values of variables during calculation using the getVars callback function.
 
-## Expression format.
+## Expression format
 - The expression is a [normal Polish notation](https://en.wikipedia.org/wiki/Polish_notation).
 - All operators, variables and constants in the expression are separated from each other by one space.
 - Constant syntax is defined by Go syntax for floating point literals.
 - The variable is represented by the symbol 'x' (code 120) and the variable index immediately following it. It is this index that will be passed to the getVals callback to obtain the value of this variable during calculation.
 
-## Valid operators.
+## Valid operators
 - ```+``` addition
 - ```-``` subtraction
 - ```*``` multiplication
