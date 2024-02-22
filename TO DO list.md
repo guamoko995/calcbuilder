@@ -1,0 +1,6 @@
+- Linters.
+- CI.
+- True error handling.
+- Bench tests.
+- More operators.
+- Math functions.
