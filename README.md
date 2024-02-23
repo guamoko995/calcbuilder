@@ -33,10 +33,8 @@ func main() {
 	}
 
 	// x0 = 5, x1 = 10
-	getVars := func(i int) float64 {
-		vars := []float64{70, 30}
-		return vars[i]
-	}
+	vars := []float64{70, 30}
+	getVars := func(i int) float64 {return vars[i]}
 
 	result := calc(getVars) // (70 * 30) / (70 + 30)
 
