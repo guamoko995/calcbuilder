@@ -41,6 +41,7 @@ func buildСalcFunc(expression string) (СalcFunc func(getVar func(i int) float6
 	if len(s) > 1 {
 		expression = s[1]
 	}
+
 	switch o {
 	// TO DO support more operators (including unary)
 	case "+":
