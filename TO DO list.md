@@ -1,5 +1,4 @@
-- Linters.
-- Auto checks.
+- Configure Linters.
 - True error handling.
 - Bench tests.
 - More operators.
