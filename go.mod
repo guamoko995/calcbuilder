@@ -1,4 +1,4 @@
-module calcbuilder
+module github.com/guamoko995/calcbuilder
 
 go 1.22.0
 
