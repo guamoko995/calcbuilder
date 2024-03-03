@@ -21,8 +21,9 @@ TO DO add more operators and functions
 package main
 
 import (
-	"calcbuilder"
 	"fmt"
+
+	"github.com/guamoko995/calcbuilder"
 )
 
 func main() {
