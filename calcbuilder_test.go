@@ -1,11 +1,11 @@
 package calcbuilder_test
 
 import (
-	"calcbuilder"
 	"encoding/json"
 	"os"
 	"testing"
 
+	"github.com/guamoko995/calcbuilder"
 	"github.com/stretchr/testify/require"
 )
 
