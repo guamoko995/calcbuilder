@@ -27,17 +27,17 @@ import (
 )
 
 func main() {
+    // x0 = 70, x1 = 30
+    vars := []float64{70, 30}
+    getVars := func(i int) float64 {return vars[i]}
+
     // (x0 * x1) / (x0 + x1)
-    calc, err := calcbuilder.BuildСalcFunc("/ * x0 x1 + x0 x1 ") 
+    calc, err := calcbuilder.BuildСalcFunc("/ * x0 x1 + x0 x1 ", getVars) 
     if err != nil {
         // error handling
     }
 
-    // x0 = 5, x1 = 10
-    vars := []float64{70, 30}
-    getVars := func(i int) float64 {return vars[i]}
-
-    result := calc(getVars) // (70 * 30) / (70 + 30)
+    result := calc() // (70 * 30) / (70 + 30)
 
     fmt.Println(result) // 21
 }
