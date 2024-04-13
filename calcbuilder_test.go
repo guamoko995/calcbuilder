@@ -1,11 +1,10 @@
-package calcbuilder_test
+package calcbuilder
 
 import (
 	"encoding/json"
 	"os"
 	"testing"
 
-	"github.com/guamoko995/calcbuilder"
 	"github.com/stretchr/testify/require"
 )
 
@@ -34,8 +33,8 @@ type DataSet struct {
 func truTest(t *testing.T, data []DataSet) {
 	t.Helper()
 	for _, d := range data {
-		f, err := calcbuilder.BuildСalcFunc(d.Formula)
-		require.Nil(t, err)
+		f, err := BuildСalcFunc(d.Formula)
+		require.Nil(t, err, d)
 		require.Equal(t, d.Result, f(func(i int) float64 { return d.Vars[i] }), d.Formula)
 	}
 }

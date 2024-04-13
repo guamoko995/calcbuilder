@@ -1,5 +1,5 @@
-- Configure Linters.
-- True error handling.
+- Generalize computational pattern
+- Test error handling.
 - Bench tests.
 - More operators.
 - Math functions.
