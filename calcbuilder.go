@@ -20,10 +20,8 @@ import (
 //   - The variable is represented by the symbol 'x' (code 120) and the variable index
 //     immediately following it. It is this index that will be passed to the getVals
 //     callback to obtain the value of this variable during calculation.
-//
-// Valid operators: "+", "-" (binary), "*", "/"
-func BuildСalcFunc(expression string) (calcFunc func(getVar func(i int) float64) float64, err error) {
-	calcFunc, apendix, err := buildСalcFunc(expression)
+func BuildСalcFunc(expression string, getVar func(i int) float64) (calcFunc func() float64, err error) {
+	calcFunc, apendix, err := buildСalcFunc(expression, getVar)
 	if err != nil {
 		return nil, err
 	}
@@ -37,139 +35,73 @@ func BuildСalcFunc(expression string) (calcFunc func(getVar func(i int) float64
 	return
 }
 
-func buildСalcFunc(expression string) (СalcFunc func(getVar func(i int) float64) float64, apendix string, err error) {
+// Valid operators
+var binaryOperators = map[string]func(x, y func() float64) func() float64{
+	"+": func(x, y func() float64) func() float64 {
+		return func() float64 {
+			return x() + y()
+		}
+	},
+	"-": func(x, y func() float64) func() float64 {
+		return func() float64 {
+			return x() - y()
+		}
+	},
+	"*": func(x, y func() float64) func() float64 {
+		return func() float64 {
+			return x() * y()
+		}
+	},
+	"/": func(x, y func() float64) func() float64 {
+		return func() float64 {
+			return x() / y()
+		}
+	},
+}
+
+func buildСalcFunc(expression string, getVar func(i int) float64) (calcFunc func() float64, apendix string, err error) {
 	if expression == "" {
 		return nil, "", ErrUnexpectedEndOfExpression
 	}
-	token, apendix, _ := strings.Cut(expression, " ")
-	switch token {
-	// TO DO support more operators (including unary)
-	case "+":
-		var f1, f2 func(func(i int) float64) float64
+	term, apendix, _ := strings.Cut(expression, " ")
 
+	// binary operator
+	if operator, exist := binaryOperators[term]; exist {
+		var operands [2]func() float64
 		position := len(expression) - len(apendix) - 1
-		f1, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-		position = len(expression) - len(apendix) - 1
-		f2, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
 
-		return func(getVar func(i int) float64) float64 {
-			return f1(getVar) + f2(getVar)
-		}, apendix, nil
-	case "-":
-		var f1, f2 func(func(i int) float64) float64
-
-		position := len(expression) - len(apendix) - 1
-		f1, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-		position = len(expression) - len(apendix) - 1
-		f2, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-
-		return func(getVar func(i int) float64) float64 {
-			return f1(getVar) - f2(getVar)
-		}, apendix, nil
-	case "*":
-		var f1, f2 func(func(i int) float64) float64
-
-		position := len(expression) - len(apendix) - 1
-		f1, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-		position = len(expression) - len(apendix) - 1
-		f2, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-
-		return func(getVar func(i int) float64) float64 {
-			return f1(getVar) * f2(getVar)
-		}, apendix, nil
-	case "/":
-		var f1, f2 func(func(i int) float64) float64
-
-		position := len(expression) - len(apendix) - 1
-		f1, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-		position = len(expression) - len(apendix) - 1
-		f2, apendix, err = buildСalcFunc(apendix)
-		if err != nil {
-			var tg PositionErr
-			if errors.As(err, &tg) {
-				tg.Position += position
-				err = tg
-			}
-			return nil, "", err
-		}
-
-		return func(getVar func(i int) float64) float64 {
-			return f1(getVar) / f2(getVar)
-		}, apendix, nil
-	default:
-		if token[0] == 'x' { // var
-			i64, err := strconv.ParseInt(token[1:], 10, 64)
+		for i := range operands {
+			operands[i], apendix, err = buildСalcFunc(apendix, getVar)
 			if err != nil {
-				return nil, apendix, PositionErr{WrappedErr: ErrInvalidToken}
+				var tg PositionErr
+				if errors.As(err, &tg) {
+					tg.Position += position
+					err = tg
+				}
+				return nil, "", err
 			}
-			i := int(i64)
-			return func(getVar func(i int) float64) float64 {
-				return getVar(i)
-			}, apendix, nil
-		} else { // const
-			c, err := strconv.ParseFloat(token, 64)
-			if err != nil {
-				return nil, apendix, PositionErr{WrappedErr: ErrInvalidToken}
-			}
-			return func(getVar func(i int) float64) float64 {
-				return c
-			}, apendix, nil
 		}
+		return operator(operands[0], operands[1]), apendix, nil
 	}
+
+	// var
+	if term[0] == 'x' {
+		i64, err := strconv.ParseInt(term[1:], 10, 64)
+		if err != nil {
+			return nil, apendix, PositionErr{WrappedErr: ErrInvalidTerm}
+		}
+		i := int(i64)
+		return func() float64 {
+			return getVar(i)
+		}, apendix, nil
+	}
+
+	// const
+	c, err := strconv.ParseFloat(term, 64)
+	if err != nil {
+		return nil, apendix, PositionErr{WrappedErr: ErrInvalidTerm}
+	}
+	return func() float64 {
+		return c
+	}, apendix, nil
 }
