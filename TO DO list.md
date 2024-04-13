@@ -1,4 +1,3 @@
-- Generalize computational pattern
 - Test error handling.
 - Bench tests.
 - More operators.

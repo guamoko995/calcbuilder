@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrInvalidToken                       = errors.New("invalid token")
+	ErrInvalidTerm                        = errors.New("invalid term")
 	ErrUnexpectedEndOfExpression          = errors.New("anexpected end of expression")
 	ErrUnexpectedContinuationOfExpression = errors.New("unexpected continuation of expression")
 )
