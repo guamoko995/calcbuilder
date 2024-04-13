@@ -20,8 +20,8 @@ import (
 //   - The variable is represented by the symbol 'x' (code 120) and the variable index
 //     immediately following it. It is this index that will be passed to the getVals
 //     callback to obtain the value of this variable during calculation.
-func BuildСalcFunc(expression string, getVar func(i int) float64) (calcFunc func() float64, err error) {
-	calcFunc, apendix, err := buildСalcFunc(expression, getVar)
+func BuildСalcFunc(expression string, getVar func(i int) float64) (CalcFunc func() float64, err error) {
+	CalcFunc, apendix, err := buildСalcFunc(expression, getVar)
 	if err != nil {
 		return nil, err
 	}
@@ -36,26 +36,18 @@ func BuildСalcFunc(expression string, getVar func(i int) float64) (calcFunc fun
 }
 
 // Valid operators
-var binaryOperators = map[string]func(x, y func() float64) func() float64{
-	"+": func(x, y func() float64) func() float64 {
-		return func() float64 {
-			return x() + y()
-		}
+var binaryOperators = map[string]func(x, y float64) float64{
+	"+": func(x, y float64) float64 {
+		return x + y
 	},
-	"-": func(x, y func() float64) func() float64 {
-		return func() float64 {
-			return x() - y()
-		}
+	"-": func(x, y float64) float64 {
+		return x - y
 	},
-	"*": func(x, y func() float64) func() float64 {
-		return func() float64 {
-			return x() * y()
-		}
+	"*": func(x, y float64) float64 {
+		return x * y
 	},
-	"/": func(x, y func() float64) func() float64 {
-		return func() float64 {
-			return x() / y()
-		}
+	"/": func(x, y float64) float64 {
+		return x / y
 	},
 }
 
@@ -81,7 +73,9 @@ func buildСalcFunc(expression string, getVar func(i int) float64) (calcFunc fun
 				return nil, "", err
 			}
 		}
-		return operator(operands[0], operands[1]), apendix, nil
+		return func() float64 {
+			return operator(operands[0](), operands[1]())
+		}, apendix, nil
 	}
 
 	// var
