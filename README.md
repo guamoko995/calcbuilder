@@ -72,20 +72,20 @@ getVar = func(i int) float64 { return vars[i] }
 		return getVar(0) * getVar(1) / (getVar(0) + getVar(1))
 	}
    ```
-4. Used a universal [runtime calculator](https://github.com/guamoko995/calcbuilder/blob/master/tests/universal_runtime_calc_test.go).
+4. Used a [stack calculator](https://github.com/guamoko995/calcbuilder/blob/master/tests/calc_on_stack_test.go).
 
 ### Benchmark results
 ```
 goos: linux
 goarch: amd64
-pkg: github.com/guamoko995/calcbuilder
+pkg: github.com/guamoko995/calcbuilder/tests
 cpu: AMD Ryzen 5 5600H with Radeon Graphics         
-Benchmark/calc_builder-12         	61060794	        19.77 ns/op	       0 B/op	       0 allocs/op
-Benchmark/compilled-12             	216661424	         5.583 ns/op	       0 B/op	       0 allocs/op
-Benchmark/compilled_in_var-12      	214518717	         5.562 ns/op	       0 B/op	       0 allocs/op
-Benchmark/calc_runtime-12         	12651817	        94.51 ns/op	      56 B/op	       7 allocs/op
+Benchmark/calc_builder-12         	62482611	        19.07 ns/op	       0 B/op	       0 allocs/op
+Benchmark/compilled-12            	179408836	         6.874 ns/op	       0 B/op	       0 allocs/op
+Benchmark/compilled_in_var-12     	179180094	         6.717 ns/op	       0 B/op	       0 allocs/op
+Benchmark/calc_on_stack-12        	12713480	        95.77 ns/op	      56 B/op	       7 allocs/op
 PASS
-ok  	github.com/guamoko995/calcbuilder	7.015s
+ok  	github.com/guamoko995/calcbuilder/tests	7.313s
 ```
 
 TODO Understand why there are allocations in runtime calculations of the benchmark.

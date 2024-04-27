@@ -7,15 +7,15 @@ import (
 	"github.com/pkg/errors"
 )
 
-type calcRuntime struct {
+type calcOnStack struct {
 	stack  []any
 	frml   []any
 	getVar func(int) float64
 }
 
-func newCalcRuntime(expression string, getVar func(int) float64) (*calcRuntime, error) {
+func newCalcOnStack(expression string, getVar func(int) float64) (*calcOnStack, error) {
 	terms := strings.Split(expression, " ")
-	c := &calcRuntime{
+	c := &calcOnStack{
 		stack:  make([]any, len(terms)),
 		frml:   make([]any, 0, len(terms)),
 		getVar: getVar,
@@ -44,7 +44,7 @@ func newCalcRuntime(expression string, getVar func(int) float64) (*calcRuntime, 
 }
 
 // TODO Understand why there are allocations.
-func (c *calcRuntime) calc() float64 {
+func (c *calcOnStack) calc() float64 {
 	lenStack := 0
 	for _, terml := range c.frml {
 		switch s := (terml).(type) {

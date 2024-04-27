@@ -63,9 +63,9 @@ func Benchmark(b *testing.B) {
 		b.StopTimer()
 	})
 
-	b.Run("calc runtime", func(b *testing.B) {
+	b.Run("calc on stack", func(b *testing.B) {
 		// (x0 * x1) / (x0 + x1)
-		c, err := newCalcRuntime("x0 x1 * x0 x1 + /", getVar)
+		c, err := newCalcOnStack("x0 x1 * x0 x1 + /", getVar)
 		if err != nil {
 			panic(err)
 		}
