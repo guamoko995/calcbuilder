@@ -21,7 +21,7 @@ func TestBuildCalcFunc(t *testing.T) {
 		truTest(t, data)
 	})
 
-	// TO DO add error tests
+	// TODO add error tests
 }
 
 type DataSet struct {

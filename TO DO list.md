@@ -1,4 +1,4 @@
+- Understand why there are allocations in runtime calculations of the benchmark.
 - Test error handling.
-- Bench tests.
 - More operators.
 - Math functions.
