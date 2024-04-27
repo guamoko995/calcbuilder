@@ -1,5 +1,5 @@
 # Calc builder
-BuildСalcFunc builds the СalcFunc function. CalcFunc effectively calculates the value of the expression passed to BuildСalcFunc during construction. Expression can contain variables. CalcFunc obtains the values of variables during calculation using the getVars callback function.
+BuildСalcFunc builds the СalcFunc function. CalcFunc effectively calculates the value of the expression passed to BuildСalcFunc during construction. Expression can contain variables. CalcFunc obtains the values of variables during calculation using the getVar callback function.
 
 ## Expression format
 - The expression is a [normal Polish notation](https://en.wikipedia.org/wiki/Polish_notation).
@@ -29,10 +29,10 @@ import (
 func main() {
     // x0 = 70, x1 = 30
     vars := []float64{70, 30}
-    getVars := func(i int) float64 {return vars[i]}
+    getVar := func(i int) float64 {return vars[i]}
 
     // (x0 * x1) / (x0 + x1)
-    calc, err := calcbuilder.BuildСalcFunc("/ * x0 x1 + x0 x1", getVars) 
+    calc, err := calcbuilder.BuildСalcFunc("/ * x0 x1 + x0 x1", getVar) 
     if err != nil {
         // error handling
     }
@@ -44,36 +44,45 @@ func main() {
 ```
 
 ## Benchmark
-[benchmark code](https://github.com/guamoko995/calcbuilder/blob/master/calcbuilder_bench_test.go)
+[benchmark code](https://github.com/guamoko995/calcbuilder/blob/master/tests/calcbuilder_bench_test.go)
 
-### Test expression
+### Test data
+
+#### Expression
 ```(x0 * x1) / (x0 + x1)```
+
+#### Function for getting variable values
+```go
+// x0 = 70, x1 = 30
+vars = []float64{70, 30}
+getVar = func(i int) float64 { return vars[i] }
+```
 
 ### Сompared cases
 1. Used calc builder.
 2. Used compilled calc function.
     ```go
-    func compiled() float64 {
-        return getVars(0) * getVars(1) / (getVars(0) + getVars(1))
+    func compilled() float64 {
+        return getVar(0) * getVar(1) / (getVar(0) + getVar(1))
     }
    ```
 3. Used compilled calc function in var.
     ```go
-	compilInVar := func() float64 {
-		return getVars(0) * getVars(1) / (getVars(0) + getVars(1))
+	compilledInVar := func() float64 {
+		return getVar(0) * getVar(1) / (getVar(0) + getVar(1))
 	}
    ```
-4. Used a universal [runtime calculator](https://github.com/guamoko995/calcbuilder/blob/master/universal_runtime_calc.go).
+4. Used a universal [runtime calculator](https://github.com/guamoko995/calcbuilder/blob/master/tests/universal_runtime_calc_test.go).
 
-### Benchmark results:
+### Benchmark results
 ```
 goos: linux
 goarch: amd64
 pkg: github.com/guamoko995/calcbuilder
 cpu: AMD Ryzen 5 5600H with Radeon Graphics         
 Benchmark/calc_builder-12         	61060794	        19.77 ns/op	       0 B/op	       0 allocs/op
-Benchmark/compiled-12             	216661424	         5.583 ns/op	       0 B/op	       0 allocs/op
-Benchmark/compiled_in_var-12      	214518717	         5.562 ns/op	       0 B/op	       0 allocs/op
+Benchmark/compilled-12             	216661424	         5.583 ns/op	       0 B/op	       0 allocs/op
+Benchmark/compilled_in_var-12      	214518717	         5.562 ns/op	       0 B/op	       0 allocs/op
 Benchmark/calc_runtime-12         	12651817	        94.51 ns/op	      56 B/op	       7 allocs/op
 PASS
 ok  	github.com/guamoko995/calcbuilder	7.015s

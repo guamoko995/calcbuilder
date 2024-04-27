@@ -1,4 +1,4 @@
-package calcbuilder
+package calcbuilder_test
 
 import (
 	"strconv"
@@ -43,6 +43,7 @@ func newCalcRuntime(expression string, getVar func(int) float64) (*calcRuntime, 
 	return c, nil
 }
 
+// TODO Understand why there are allocations.
 func (c *calcRuntime) calc() float64 {
 	lenStack := 0
 	for _, terml := range c.frml {

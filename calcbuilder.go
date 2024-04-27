@@ -10,7 +10,7 @@ import (
 // BuildСalcFunc builds the СalcFunc function. CalcFunc effectively calculates
 // the value of the expression passed to BuildСalcFunc during construction.
 // expression can contain variables. CalcFunc obtains the values of variables during
-// calculation using the getVars callback function.
+// calculation using the getVar callback function.
 //
 // Expression format.
 //   - Еhe expression is used in direct Polish notation.

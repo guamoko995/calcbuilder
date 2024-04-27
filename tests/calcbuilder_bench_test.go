@@ -1,22 +1,24 @@
-package calcbuilder
+package calcbuilder_test
 
 import (
 	"testing"
+
+	"github.com/guamoko995/calcbuilder"
 )
 
 var (
-	vars    []float64
-	getVars func(i int) float64
+	vars   []float64
+	getVar func(i int) float64
 )
 
 func Benchmark(b *testing.B) {
 	// x0 = 70, x1 = 30
 	vars = []float64{70, 30}
-	getVars = func(i int) float64 { return vars[i] }
+	getVar = func(i int) float64 { return vars[i] }
 
 	b.Run("calc builder", func(b *testing.B) {
 		// (x0 * x1) / (x0 + x1)
-		calc, err := BuildСalcFunc("/ * x0 x1 + x0 x1", getVars)
+		calc, err := calcbuilder.BuildСalcFunc("/ * x0 x1 + x0 x1", getVar)
 		if err != nil {
 			panic(err)
 		}
@@ -32,38 +34,38 @@ func Benchmark(b *testing.B) {
 		b.StopTimer()
 	})
 
-	b.Run("compiled", func(b *testing.B) {
-		if compiled() != 21 {
+	b.Run("compilled", func(b *testing.B) {
+		if compilled() != 21 {
 			panic("wrong answer")
 		}
 
 		b.ResetTimer()
 		for i := 1; i <= b.N; i++ {
-			_ = compiled() // (70 * 30) / (70 + 30)
+			_ = compilled() // (70 * 30) / (70 + 30)
 		}
 		b.StopTimer()
 	})
 
-	b.Run("compiled in var", func(b *testing.B) {
+	b.Run("compilled in var", func(b *testing.B) {
 		// (x0 * x1) / (x0 + x1)
-		compilInVar := func() float64 {
-			return getVars(0) * getVars(1) / (getVars(0) + getVars(1))
+		compilledInVar := func() float64 {
+			return getVar(0) * getVar(1) / (getVar(0) + getVar(1))
 		}
 
-		if compilInVar() != 21 {
+		if compilledInVar() != 21 {
 			panic("wrong answer")
 		}
 
 		b.ResetTimer()
 		for i := 1; i <= b.N; i++ {
-			_ = compilInVar() // (70 * 30) / (70 + 30)
+			_ = compilledInVar() // (70 * 30) / (70 + 30)
 		}
 		b.StopTimer()
 	})
 
 	b.Run("calc runtime", func(b *testing.B) {
 		// (x0 * x1) / (x0 + x1)
-		c, err := newCalcRuntime("x0 x1 * x0 x1 + /", getVars)
+		c, err := newCalcRuntime("x0 x1 * x0 x1 + /", getVar)
 		if err != nil {
 			panic(err)
 		}
@@ -81,6 +83,6 @@ func Benchmark(b *testing.B) {
 }
 
 // (x0 * x1) / (x0 + x1)
-func compiled() float64 {
-	return getVars(0) * getVars(1) / (getVars(0) + getVars(1))
+func compilled() float64 {
+	return getVar(0) * getVar(1) / (getVar(0) + getVar(1))
 }
